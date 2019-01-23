@@ -7,17 +7,25 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     private float speed; //ustawiana w Unity zmienna szybkości
 
-    private Animator animator; //obiekt animacji
+    private Animator myAnimator; //obiekt animacji
 
     protected Vector2 direction; //obiekt kierunek ruchu
 
     private Rigidbody2D myRigidbody;
 
+    public bool IsMoving
+    {
+        get
+        {
+            return direction.x != 0 || direction.y != 0;
+        }
+    }
+
     // Start is called before the first frame update
     protected virtual void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>(); //referencja komponentu animacji
+        myAnimator = GetComponent<Animator>(); //referencja komponentu animacji
     }
 
     // Update is called once per frame
@@ -33,26 +41,31 @@ public abstract class Character : MonoBehaviour
 
     public void Move()
     {
-        myRigidbody.velocity = direction * speed;
-
-        AnimateMovement(direction); //rozpoczęcie animacji postaci
+        myRigidbody.velocity = direction.normalized * speed;
     }
 
     public void HandleLayers()
     {
-        if(direction.x != 0 || direction.y != 0)
+        if(IsMoving)
         {
-            AnimateMovement(direction);
+            ActivateLayer("WalkLayer");
+
+            myAnimator.SetFloat("x", direction.x); //parametr x stworzony w animatorze
+            myAnimator.SetFloat("y", direction.y); //parametr y stworzony w animatorze
         }
         else
         {
-            animator.SetLayerWeight(1, 0);
+            ActivateLayer("IdleLayer");
         }
     }
 
-    public void AnimateMovement(Vector2 direction) //animacja postaci playera
+    public void ActivateLayer(string layerName)
     {
-        animator.SetFloat("x", direction.x); //parametr x stworzony w animatorze
-        animator.SetFloat("y", direction.y); //parametr y stworzony w animatorze
+        for (int i = 0; i < myAnimator.layerCount; i++ )
+        {
+            myAnimator.SetLayerWeight(i, 0);
+        }
+
+        myAnimator.SetLayerWeight(myAnimator.GetLayerIndex(layerName), 1);
     }
 }
