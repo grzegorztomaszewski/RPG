@@ -18,6 +18,11 @@ public class Player : Character //dziedziczenie po klasie character
     [SerializeField]
     private GameObject[] spellPrefab;
 
+    [SerializeField]
+    private Transform[] exitPoints; //zmienna ustawiająca pozycje pocisku
+
+    private int exitIndex = 2; //index(liczba), która przypisana jest do danej pozycji exitPoints (Element 0, Element 1)
+
     protected override void Start()
     {
         health.Initialize(initHealth, initHealth); //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 100
@@ -50,21 +55,25 @@ public class Player : Character //dziedziczenie po klasie character
 
         if (Input.GetKey(KeyCode.W))
         {
+            exitIndex = 0;  //wybiera Element 0 z pośród exit points (do ustawiania pozycji spella)
             direction += Vector2.up;
         }
 
         if (Input.GetKey(KeyCode.A))
         {
+            exitIndex = 0;
             direction += Vector2.left;
         }
 
         if (Input.GetKey(KeyCode.S))
         {
+            exitIndex = 0;
             direction += Vector2.down;
         }
 
         if (Input.GetKey(KeyCode.D))
         {
+            exitIndex = 0;
             direction += Vector2.right;
         }
 
@@ -92,6 +101,6 @@ public class Player : Character //dziedziczenie po klasie character
 
     public void CastSpell()
     {
-        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);  //fireball
+        Instantiate(spellPrefab[0], exitPoints[exitIndex].position, Quaternion.identity);  //fireball
     }
 }
