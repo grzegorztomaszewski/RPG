@@ -7,11 +7,12 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     private float speed; //ustawiana w Unity zmienna szybkości
 
-    private Animator myAnimator; //obiekt animacji
-
+    protected Animator myAnimator; //obiekt animacji
     protected Vector2 direction; //obiekt kierunek ruchu
-
     private Rigidbody2D myRigidbody;
+    protected bool isAttacking;
+    protected Coroutine attackRoutine;
+
 
     public bool IsMoving
     {
@@ -46,14 +47,20 @@ public abstract class Character : MonoBehaviour
 
     public void HandleLayers()
     {
-        if(IsMoving)
+        if(IsMoving) //jeśli się ruszamy, aktywna jest ta warstwa
         {
             ActivateLayer("WalkLayer");
 
             myAnimator.SetFloat("x", direction.x); //parametr x stworzony w animatorze
             myAnimator.SetFloat("y", direction.y); //parametr y stworzony w animatorze
+
+            StopAttack();
         }
-        else
+        else if (isAttacking) //jeśli atakujemy, aktywuje się ta warstwa
+        {
+            ActivateLayer("AttackLayer");
+        }
+        else //jeśli nic nie robimy, aktywuje się ta warstwa
         {
             ActivateLayer("IdleLayer");
         }
@@ -61,11 +68,22 @@ public abstract class Character : MonoBehaviour
 
     public void ActivateLayer(string layerName)
     {
-        for (int i = 0; i < myAnimator.layerCount; i++ )
+        for (int i = 0; i < myAnimator.layerCount; i++)
         {
             myAnimator.SetLayerWeight(i, 0);
         }
 
         myAnimator.SetLayerWeight(myAnimator.GetLayerIndex(layerName), 1);
+    }
+
+    public void StopAttack()
+    {
+        isAttacking = false;
+        myAnimator.SetBool("attack", isAttacking);
+
+        if (attackRoutine != null)
+        {
+        StopCoroutine(attackRoutine);
+        }
     }
 }
