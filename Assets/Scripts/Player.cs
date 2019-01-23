@@ -15,6 +15,9 @@ public class Player : Character //dziedziczenie po klasie character
 
     private float initMana = 50; //ustawienie na sztywno MANA=50
 
+    [SerializeField]
+    private GameObject[] spellPrefab;
+
     protected override void Start()
     {
         health.Initialize(initHealth, initHealth); //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 100
@@ -80,8 +83,15 @@ public class Player : Character //dziedziczenie po klasie character
 
         myAnimator.SetBool("attack", isAttacking);
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(1);
+
+        CastSpell();
 
         StopAttack();
+    }
+
+    public void CastSpell()
+    {
+        Instantiate(spellPrefab[0], transform.position, Quaternion.identity);  //fireball
     }
 }

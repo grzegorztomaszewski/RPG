@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Character.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\Spell.cs" />
      <Compile Include="Assets\Scripts\Stat.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/arox2/Desktop/Projekty lokalne/RPG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
