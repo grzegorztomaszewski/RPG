@@ -5,34 +5,35 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
-    private float speed;
+    private float speed; //ustawiana w Unity zmienna szybkości
 
-    private Animator animator;
+    private Animator animator; //obiekt animacji
 
-    protected Vector2 direction;
+    protected Vector2 direction; //obiekt kierunek ruchu
 
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>(); //referencja komponentu animacji
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        Move();
+        Move(); //wywołanie funkcji ruchu + animacji
     }
+
     public void Move()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime); //rozpoczęcie ruchu postaci
 
-        AnimateMovement(direction);
+        AnimateMovement(direction); //rozpoczęcie animacji postaci
     }
 
-    public void AnimateMovement(Vector2 direction)
+    public void AnimateMovement(Vector2 direction) //animacja postaci playera
     {
-        animator.SetFloat("x", direction.x);
-        animator.SetFloat("y", direction.y);
+        animator.SetFloat("x", direction.x); //parametr x stworzony w animatorze
+        animator.SetFloat("y", direction.y); //parametr y stworzony w animatorze
     }
 }
