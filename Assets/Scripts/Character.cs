@@ -11,24 +11,43 @@ public abstract class Character : MonoBehaviour
 
     protected Vector2 direction; //obiekt kierunek ruchu
 
+    private Rigidbody2D myRigidbody;
 
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        myRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>(); //referencja komponentu animacji
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        Move(); //wywołanie funkcji ruchu + animacji
+        HandleLayers();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     public void Move()
     {
-        transform.Translate(direction * speed * Time.deltaTime); //rozpoczęcie ruchu postaci
+        myRigidbody.velocity = direction * speed;
 
         AnimateMovement(direction); //rozpoczęcie animacji postaci
+    }
+
+    public void HandleLayers()
+    {
+        if(direction.x != 0 || direction.y != 0)
+        {
+            AnimateMovement(direction);
+        }
+        else
+        {
+            animator.SetLayerWeight(1, 0);
+        }
     }
 
     public void AnimateMovement(Vector2 direction) //animacja postaci playera
