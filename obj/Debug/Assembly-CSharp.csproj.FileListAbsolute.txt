@@ -282,3 +282,7 @@ C:\Users\arox2\Desktop\RPG\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.ca
 C:\Users\arox2\Desktop\RPG\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\arox2\Desktop\RPG\obj\Debug\Assembly-CSharp.dll
 C:\Users\arox2\Desktop\RPG\obj\Debug\Assembly-CSharp.pdb
+C:\Users\arox2\Desktop\Projekty lokalne\RPG\obj\Debug\Assembly-CSharp.csprojAssemblyReference.cache
+C:\Users\arox2\Desktop\Projekty lokalne\RPG\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
+C:\Users\arox2\Desktop\Projekty lokalne\RPG\obj\Debug\Assembly-CSharp.dll
+C:\Users\arox2\Desktop\Projekty lokalne\RPG\obj\Debug\Assembly-CSharp.pdb

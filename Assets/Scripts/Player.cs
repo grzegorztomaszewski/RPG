@@ -64,5 +64,24 @@ public class Player : Character //dziedziczenie po klasie character
         {
             direction += Vector2.right;
         }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!isAttacking && !IsMoving)
+            {
+            attackRoutine = StartCoroutine(Attack());
+            }
+        }
+    }
+
+    private IEnumerator Attack()
+    {
+        isAttacking = true;
+
+        myAnimator.SetBool("attack", isAttacking);
+
+        yield return new WaitForSeconds(5);
+
+        StopAttack();
     }
 }
