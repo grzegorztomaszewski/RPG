@@ -32,16 +32,16 @@ public class Player : Character //dziedziczenie po klasie character
     private void GetInput() //pobieranie wartości z klawiatury (ruch postaci)
     {
         ////TEST na działanie paska HP/MANA
-        //if(Input.GetKeyDown(KeyCode.I))
-        //{
-        //    health.MyCurrentValue -= 10;
-        //    mana.MyCurrentValue -= 10;
-        //}
-        //if(Input.GetKeyDown(KeyCode.O))
-        //{
-        //    health.MyCurrentValue += 10;
-        //    mana.MyCurrentValue += 10;
-        //}
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            health.MyCurrentValue -= 10;
+            mana.MyCurrentValue -= 10;
+        }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            health.MyCurrentValue += 10;
+            mana.MyCurrentValue += 10;
+        }
 
         direction = Vector2.zero;
 

@@ -6,7 +6,10 @@ using UnityEngine.UI;
 public class Stat : MonoBehaviour
 {
     private Image content; //tworzenie obiektu wcześniej stworoznego w Unity
-    
+
+    [SerializeField]
+    private Text statValue; //tworzenie obiektu text
+
     [SerializeField]
     private float lerpSpeed; //prędkość animacji paska HP/MANA
 
@@ -38,6 +41,8 @@ public class Stat : MonoBehaviour
             }
 
             currentFill = currentValue / MyMaxValue; //ustawienie poziomu paska HP(image)
+
+            statValue.text = currentValue + "/" + MyMaxValue; //wyświetlanie wartości HP/MANA jako tekst
         }
     }
 
@@ -45,7 +50,6 @@ public class Stat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        MyMaxValue = 100; //przy starcie ustawia HP/MANA na 100
         content = GetComponent<Image>(); //referencja do komponentu w Unity
     }
 
