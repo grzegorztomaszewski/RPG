@@ -93,7 +93,9 @@ public class Player : Character //dziedziczenie po klasie character
 
         yield return new WaitForSeconds(1);
 
-        Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);  //fireball
+       Spell s = Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();  //fireball
+
+        s.MyTarget = MyTarget;
 
         StopAttack();
     }

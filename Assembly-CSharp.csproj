@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Spell.cs" />
      <Compile Include="Assets\Scripts\Stat.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
+     <Compile Include="Assets\SpellBehaviour.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/arox2/Desktop/Projekty lokalne/RPG/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
