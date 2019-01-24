@@ -26,19 +26,17 @@ public class Player : Character //dziedziczenie po klasie character
 
     private int exitIndex = 2; //index(liczba), która przypisana jest do danej pozycji exitPoints (Element 0, Element 1)
 
-    private Transform target;
+    public Transform MyTarget { get; set; }
 
-    protected override void Start()
+    protected override void Start()                                                             //START
     {
         health.Initialize(initHealth, initHealth); //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 100
         mana.Initialize(initMana, initMana);       //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 50
 
-        target= GameObject.Find("Target").transform;
-
         base.Start();
     }
 
-    protected override void Update()
+    protected override void Update()                                                            //UPDATE
     {
         GetInput(); //wywołanie metody pobierania wartości z klawiatury (ruch)
 
@@ -85,19 +83,9 @@ public class Player : Character //dziedziczenie po klasie character
             exitIndex = 1;
             direction += Vector2.right;
         }
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isAttacking && !IsMoving && InLineOfSight())
-            {
-                Block();
-
-            attackRoutine = StartCoroutine(Attack());
-            }
-        }
     }
 
-    private IEnumerator Attack()
+    private IEnumerator Attack(int spellIndex)
     {
         isAttacking = true;
 
@@ -105,22 +93,27 @@ public class Player : Character //dziedziczenie po klasie character
 
         yield return new WaitForSeconds(1);
 
-        CastSpell();
+        Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity);  //fireball
 
         StopAttack();
     }
 
-    public void CastSpell()
+    public void CastSpell(int spellIndex)
     {
-        Instantiate(spellPrefab[0], exitPoints[exitIndex].position, Quaternion.identity);  //fireball
+        if (!isAttacking && !IsMoving && InLineOfSight())
+        {
+            Block();
+
+            attackRoutine = StartCoroutine(Attack(spellIndex));
+        }
     }
 
     private bool InLineOfSight()
     {
-        Vector3 targetDirection = (target.transform.position - transform.position).normalized;
+        Vector3 targetDirection = (MyTarget.transform.position - transform.position).normalized;
 
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, target.transform.position),256);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position),256);
 
         if(hit.collider ==null)
             {
