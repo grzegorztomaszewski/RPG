@@ -88,6 +88,8 @@ public class Player : Character //dziedziczenie po klasie character
 
     private IEnumerator Attack(int spellIndex)
     {
+        Transform currentTarget = MyTarget;
+
         Spell newSpell = spellBook.CastSpell(spellIndex);
 
         isAttacking = true;
@@ -96,9 +98,11 @@ public class Player : Character //dziedziczenie po klasie character
 
         yield return new WaitForSeconds(newSpell.MyCastTime);
 
-       SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();  //fireball
-
-        s.MyTarget = MyTarget;
+        if(currentTarget != null && InLineOfSight())
+        { 
+           SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();  //fireball
+           s.MyTarget = currentTarget;
+        }
 
         StopAttack();
     }
