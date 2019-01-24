@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +13,9 @@ public abstract class Character : MonoBehaviour
     private Rigidbody2D myRigidbody;
     protected bool isAttacking;
     protected Coroutine attackRoutine;
+    [SerializeField]
+
+    protected Transform hitBox;
 
 
     public bool IsMoving
