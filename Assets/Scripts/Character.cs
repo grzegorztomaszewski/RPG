@@ -76,7 +76,7 @@ public abstract class Character : MonoBehaviour
         myAnimator.SetLayerWeight(myAnimator.GetLayerIndex(layerName), 1);
     }
 
-    public void StopAttack()
+    public virtual void StopAttack()
     {
         isAttacking = false;
         myAnimator.SetBool("attack", isAttacking);

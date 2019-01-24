@@ -15,8 +15,6 @@ public class Player : Character //dziedziczenie po klasie character
 
     private float initMana = 50; //ustawienie na sztywno MANA=50
 
-    [SerializeField]
-    private GameObject[] spellPrefab;
 
     [SerializeField]
     private Block[] blocks;
@@ -26,10 +24,13 @@ public class Player : Character //dziedziczenie po klasie character
 
     private int exitIndex = 2; //index(liczba), która przypisana jest do danej pozycji exitPoints (Element 0, Element 1)
 
+    private SpellBook spellBook; //zmienna referencyjna do skryptu "SpellBook", który podpięty jest pod playera w unity
+
     public Transform MyTarget { get; set; }
 
     protected override void Start()                                                             //START
     {
+        spellBook = GetComponent<SpellBook>();
         health.Initialize(initHealth, initHealth); //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 100
         mana.Initialize(initMana, initMana);       //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 50
 
@@ -87,13 +88,15 @@ public class Player : Character //dziedziczenie po klasie character
 
     private IEnumerator Attack(int spellIndex)
     {
+        Spell newSpell = spellBook.CastSpell(spellIndex);
+
         isAttacking = true;
 
         myAnimator.SetBool("attack", isAttacking);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(newSpell.MyCastTime);
 
-       Spell s = Instantiate(spellPrefab[spellIndex], exitPoints[exitIndex].position, Quaternion.identity).GetComponent<Spell>();  //fireball
+       SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();  //fireball
 
         s.MyTarget = MyTarget;
 
@@ -132,5 +135,12 @@ public class Player : Character //dziedziczenie po klasie character
             b.Deactivate();
         }
         blocks[exitIndex].Activate();
+    }
+
+    public override void StopAttack()
+    {
+        spellBook.StopCasting();
+
+        base.StopAttack();
     }
 }
