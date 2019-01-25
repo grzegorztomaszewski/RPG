@@ -20,6 +20,11 @@ public abstract class Character : MonoBehaviour
     [SerializeField]
     protected Stat health;
 
+    public Stat MyHealth
+    {
+        get { return health; }
+    }
+
     [SerializeField]
     private float initHealth = 100; //ustawienie na sztywno HP=100
 
