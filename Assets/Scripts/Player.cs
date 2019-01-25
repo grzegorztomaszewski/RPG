@@ -21,6 +21,8 @@ public class Player : Character //dziedziczenie po klasie character
 
     private SpellBook spellBook; //zmienna referencyjna do skryptu "SpellBook", który podpięty jest pod playera w unity
 
+    private Vector3 min, max;
+
     public Transform MyTarget { get; set; }
 
     protected override void Start()                                                             //START
@@ -34,6 +36,10 @@ public class Player : Character //dziedziczenie po klasie character
     protected override void Update()                                                            //UPDATE
     {
         GetInput(); //wywołanie metody pobierania wartości z klawiatury (ruch)
+
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, min.x, max.x),
+            Mathf.Clamp(transform.position.y, min.y, max.y),
+            transform.position.z);
 
         base.Update();
     }
@@ -78,6 +84,12 @@ public class Player : Character //dziedziczenie po klasie character
             exitIndex = 1;
             direction += Vector2.right;
         }
+    }
+
+    public void SetLimits(Vector3 min, Vector3 max)
+    {
+        this.min = min;
+        this.max = max;
     }
 
     private IEnumerator Attack(int spellIndex)
