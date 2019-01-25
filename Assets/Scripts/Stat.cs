@@ -66,7 +66,12 @@ public class Stat : MonoBehaviour
 
     public void Initialize(float currentValue, float maxValue) //publiczny obiekt, który ustawia 2 wartości pobierane z playera
     {
+        if (content == null)
+        {
+            content = GetComponent<Image>();
+        }
         MyMaxValue = maxValue;
         MyCurrentValue = currentValue;
+        content.fillAmount = MyCurrentValue / MyMaxValue;
     }
 }

@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                UIManager.MyInstance.HideTargerFrame();
+                UIManager.MyInstance.HideTargetFrame();
 
                 if (currentTarget != null)
                 {

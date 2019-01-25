@@ -20,8 +20,6 @@ public class UIManager : MonoBehaviour
         
     }
 
-  
-
     [SerializeField]
     private Button[] actionButtons;
 
@@ -31,6 +29,10 @@ public class UIManager : MonoBehaviour
     private GameObject targetFrame;
 
     private Stat healthStat;
+
+    [SerializeField]
+    private Image portraitFrame;
+
     
     // Start is called before the first frame update
     void Start()
@@ -73,10 +75,14 @@ public class UIManager : MonoBehaviour
 
         healthStat.Initialize(target.MyHealth.MyCurrentValue, target.MyHealth.MyMaxValue);
 
+        portraitFrame.sprite = target.MyPortrait;
+
         target.healthChanged += new HealthChanged(UpdateTargetFrame);
+
+        target.characterRemoved += new CharacterRemoved(HideTargetFrame);
     }
 
-    public void HideTargerFrame()
+    public void HideTargetFrame()
     {
         targetFrame.SetActive(false);
     }
