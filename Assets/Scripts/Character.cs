@@ -17,6 +17,11 @@ public abstract class Character : MonoBehaviour
 
     protected Transform hitBox;
 
+    [SerializeField]
+    protected Stat health;
+
+    [SerializeField]
+    private float initHealth = 100; //ustawienie na sztywno HP=100
 
     public bool IsMoving
     {
@@ -29,6 +34,9 @@ public abstract class Character : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        health.Initialize(initHealth, initHealth);
+
+
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>(); //referencja komponentu animacji
     }
@@ -88,6 +96,16 @@ public abstract class Character : MonoBehaviour
         if (attackRoutine != null)
         {
         StopCoroutine(attackRoutine);
+        }
+    }
+
+    public virtual void TakeDamage(float damage)
+    {
+        health.MyCurrentValue -= damage;
+
+        if (health.MyCurrentValue <= 0)
+        {
+            myAnimator.SetTrigger("die");
         }
     }
 }

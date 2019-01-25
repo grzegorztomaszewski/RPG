@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class Player : Character //dziedziczenie po klasie character
 {
-    [SerializeField]
-    private Stat health; //stworzenie w playerze obiektu, który jest już działającym paskiem życia w skrypcie Stat
 
     [SerializeField]
     private Stat mana;  //stworzenie w playerze obiektu, który jest już działającym paskiem many w skrypcie Stat
-
-
-    private float initHealth = 100; //ustawienie na sztywno HP=100
 
     private float initMana = 50; //ustawienie na sztywno MANA=50
 
@@ -31,7 +26,6 @@ public class Player : Character //dziedziczenie po klasie character
     protected override void Start()                                                             //START
     {
         spellBook = GetComponent<SpellBook>();
-        health.Initialize(initHealth, initHealth); //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 100
         mana.Initialize(initMana, initMana);       //zainicjowanie currentValue i MaxValue jako initHealth, które obie wartości ustawia na 50
 
         base.Start();
@@ -101,7 +95,7 @@ public class Player : Character //dziedziczenie po klasie character
         if(currentTarget != null && InLineOfSight())
         { 
            SpellScript s = Instantiate(newSpell.MySpellPrefab, exitPoints[exitIndex].position, Quaternion.identity).GetComponent<SpellScript>();  //fireball
-           s.MyTarget = currentTarget;
+           s.Initialize(currentTarget, newSpell.MyDamage);
         }
 
         StopAttack();
@@ -119,16 +113,17 @@ public class Player : Character //dziedziczenie po klasie character
 
     private bool InLineOfSight()
     {
+        if (MyTarget != null)
+        {
         Vector3 targetDirection = (MyTarget.transform.position - transform.position).normalized;
-
 
         RaycastHit2D hit = Physics2D.Raycast(transform.position, targetDirection, Vector2.Distance(transform.position, MyTarget.transform.position),256);
 
-        if(hit.collider ==null)
+        if(hit.collider == null)
             {
             return true;
             }
-
+        }
         return false;
     }
 

@@ -41,8 +41,10 @@ public class Stat : MonoBehaviour
             }
 
             currentFill = currentValue / MyMaxValue; //ustawienie poziomu paska HP(image)
-
+            if (statValue != null)
+            {
             statValue.text = currentValue + "/" + MyMaxValue; //wyświetlanie wartości HP/MANA jako tekst
+            }
         }
     }
 
