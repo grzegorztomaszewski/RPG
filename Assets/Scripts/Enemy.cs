@@ -7,6 +7,10 @@ public class Enemy : NPC
     [SerializeField]
     private CanvasGroup healthGroup;
 
+    private Transform target;
+
+    public Transform Target { get => target; set => target = value; }
+
     public override Transform Select()
     {
         healthGroup.alpha = 1;
