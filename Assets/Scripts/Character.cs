@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour
 {
     [SerializeField]
-    private float speed; //ustawiana w Unity zmienna szybkości
+    protected float speed; //ustawiana w Unity zmienna szybkości
 
     protected Animator myAnimator; //obiekt animacji
     protected Vector2 direction; //obiekt kierunek ruchu

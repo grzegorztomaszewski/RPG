@@ -18,4 +18,12 @@ public class Range : MonoBehaviour
             parent.Target = collision.transform;
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player")
+        {
+            parent.Target = null;
+        }
+    }
 }
